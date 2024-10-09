@@ -23,13 +23,25 @@ namespace PersonelMVCUI.Controllers
         {
             var model = new PersonelFormViewModel()
             {
-                Departmanlar = db.Departman.ToList()
+                Departmanlar = db.Departman.ToList(),
+                Personel = new Personel()
             };
             return View("PersonelForm",model);
         }
 
         public ActionResult Kaydet(Personel personel)
         {
+            if (!ModelState.IsValid) {
+                var model = new PersonelFormViewModel()
+                {
+                    Departmanlar = db.Departman.ToList(),
+                    Personel = personel
+                };
+                return View("PersonelForm", model);
+            }
+        
+
+
             if(personel.Id == 0)// Ekleme işlemi
                db.Personel.Add(personel);
             else // Güncelleme İşlemi

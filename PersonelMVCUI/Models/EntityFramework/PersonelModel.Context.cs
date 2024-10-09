@@ -18,7 +18,6 @@ namespace PersonelMVCUI.Models.EntityFramework
         public PersonelDbEntities()
             : base("name=PersonelDbEntities")
         {
-            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
