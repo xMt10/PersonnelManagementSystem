@@ -9,6 +9,7 @@ using PersonelMVCUI.ViewModels;
 
 namespace PersonelMVCUI.Controllers
 {
+    [Authorize(Roles = "A,U")]
     public class PersonelController : Controller
     {
         PersonelDbEntities db = new PersonelDbEntities();
@@ -18,7 +19,7 @@ namespace PersonelMVCUI.Controllers
             var model = db.Personel.Include(x=>x.Departman).ToList(); // EAGER LOADING : Personel tablosu ile Departman tablosunu joinleyecek 
             return View(model);
         }
-
+        
         public ActionResult Yeni()
         {
             var model = new PersonelFormViewModel()
@@ -29,8 +30,10 @@ namespace PersonelMVCUI.Controllers
             return View("PersonelForm",model);
         }
 
+        [ValidateAntiForgeryToken]
         public ActionResult Kaydet(Personel personel)
         {
+            
             if (!ModelState.IsValid) {
                 var model = new PersonelFormViewModel()
                 {
